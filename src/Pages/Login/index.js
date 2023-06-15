@@ -29,23 +29,19 @@ function Login(){
 
     async function logar(){
         setLoadding(true);
-        await api.get(`/Logar.php?login=${login}&senha=${stringToHash(senha)}`)
-            .then((response) => {
+        await api.post(`/Token/crudforms`, {username: login, password: stringToHash(senha)+''})
+        .then((response) => {
                 setLoadding(false);
-                if(response.data.Sucesso){
-                    sessionStorage.setItem(Config.LOGADO, 1);
-                    sessionStorage.setItem(Config.USUARIO, response.data.Objeto.Email);
-                    sessionStorage.setItem(Config.CodigoUsuario, response.data.Objeto.Codigo);
-                    toast.success('Bem vindo!');
+                localStorage.setItem(Config.LOGADO, 1);
+                localStorage.setItem(Config.USUARIO, response.data.username);
+                localStorage.setItem(Config.NOMEUSER, response.data.nome);
+                localStorage.setItem(Config.TOKEN, response.data.token);
+                toast.success('Bem vindo ' + response.data.nome + '!');
 
-                    navigate('/', {replace: true});
-                }
-                else{
-                    toast.error('Login ou senha incorretos');
-                }
+                navigate('/', {replace: true});
             }).catch(() => {
                 setLoadding(false);
-                toast.error('Erro ao logar');
+                toast.error('Login ou senha incorretos');
                 return;
             });
     }
@@ -54,7 +50,7 @@ function Login(){
         navigate('/criarUsuario', {replace: true});
     }
 
-    if(sessionStorage.getItem(Config.LOGADO) != null && sessionStorage.getItem(Config.LOGADO) === '1'){
+    if(localStorage.getItem(Config.LOGADO) != null && localStorage.getItem(Config.LOGADO) === '1'){
         navigate('/', {replace: true});
     }
 

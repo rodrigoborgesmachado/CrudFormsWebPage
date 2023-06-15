@@ -3,8 +3,8 @@ import api from '../../Services/api.js';
 import { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import Config from './../../config.json';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import { toast } from 'react-toastify';
 
 function Installers(){
     const[loadding, setLoadding] = useState(true);
@@ -13,31 +13,32 @@ function Installers(){
 
     useEffect(() => {
 
-        async function BuscarRanking(){
-            await api.get('/BuscarInstaladores.php')
+        async function BuscarInstaladores(){
+            await api.get('/CrudFormsInstalador')
             .then((response) => {
-                if(response.data.Sucesso){
-                    setLista(response.data.Lista);
+                if(response.data.success){
+                    setLista(response.data.object);
                 }
                 setLoadding(false);
             }).catch(() => {
+                toast.error('Erro ao buscar');
                 navigate('/', {replace: true});
                 return;
             });
         }
 
-        BuscarRanking();
+        BuscarInstaladores();
     }, [])
 
-function Baixar(diretorio){
-    const link = document.createElement('a');
-                link.href = diretorio;
-                // Append to html link element page
-                document.body.appendChild(link);
+    function Baixar(diretorio){
+        const link = document.createElement('a');
 
-                // Start download
-                link.click();
-}
+        link.href = diretorio;
+        // Append to html link element page
+        document.body.appendChild(link);
+        // Start download
+        link.click();
+    }
 
     if(loadding){
         return(
@@ -72,12 +73,12 @@ function Baixar(diretorio){
                                 <tr key={item.Codigo}>
                                     <td>
                                         <h4>
-                                            {item.Versao}
+                                            {item.versao}
                                         </h4>
                                     </td>
                                     <td>
                                         <h4>
-                                        <a className='botaoBaixarArquivo' onClick={() => Baixar(item.Diretorio)}><CloudDownloadIcon/> Baixar versão {item.Versao}</a>
+                                        <a className='botaoBaixarArquivo' onClick={() => Baixar(item.diretorio)}><CloudDownloadIcon/> Baixar versão {item.Versao}</a>
                                         </h4>
                                     </td>
                                 </tr>

@@ -33,7 +33,7 @@ function CriarUsuario(){
 
     async function confirmaFormulario(){
         setLoadding(true);
-        let logado = sessionStorage.getItem(Config.LOGADO) != null && sessionStorage.getItem(Config.LOGADO) === '1';
+        let logado = localStorage.getItem(Config.LOGADO) != null && localStorage.getItem(Config.LOGADO) === '1';
 
         await api.post(`/InsereUsuario.php`, 
         {
@@ -42,15 +42,15 @@ function CriarUsuario(){
             Password:stringToHash(senha),
             Administrador: administrador ? '1' : '0',
             Desenvolvedor: desenvolvedor ? '1' : '0',
-            UsuarioPai: logado ? sessionStorage.getItem(Config.CodigoUsuario) : '-1'
+            UsuarioPai: logado ? localStorage.getItem(Config.CodigoUsuario) : '-1'
         }
         )
             .then((response) => {
                 setLoadding(false);
                 if(response.data.Sucesso && !logado){
-                    sessionStorage.setItem(Config.LOGADO, 0);
-                    sessionStorage.setItem(Config.USUARIO, '');
-                    sessionStorage.setItem(Config.CodigoUsuario, '');
+                    localStorage.setItem(Config.LOGADO, 0);
+                    localStorage.setItem(Config.USUARIO, '');
+                    localStorage.setItem(Config.CodigoUsuario, '');
                     
                     toast.success('Usuário criado com sucesso! Login Liberado!');
                     navigate('/login', {replace: true});

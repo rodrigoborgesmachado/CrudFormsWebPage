@@ -1,5 +1,6 @@
 {
     "LOGADO":"logado",
     "USUARIO":"usuario",
-    "CodigoUsuario":"codigousuario"
+    "NOMEUSER": "nome",
+    "TOKEN": "token"
 }

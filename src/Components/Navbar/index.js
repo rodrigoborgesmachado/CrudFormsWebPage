@@ -19,7 +19,7 @@ import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const pages = ['Home', 'Módulos', 'Instaladores'];
-const settings = ['Usuários', 'Sair'];
+const settings = ['Olá ' + localStorage.getItem(Config.NOMEUSER), 'Usuários', 'Sair'];
 
 const ResponsiveAppBar = () => {
     const navigate = useNavigate();
@@ -59,21 +59,21 @@ const ResponsiveAppBar = () => {
   function SelecionaOpcaoUsuario(setting){
     handleCloseUserMenu();
     
-    if(setting === settings[0]){
+    if(setting === settings[1]){
         navigate('/usuarios', {replace: true});
     }
-    else if(setting === settings[1]){
+    else if(setting === settings[2]){
         sair();
     }
   }
 
-    function sair(){
-        sessionStorage.setItem(Config.LOGADO, 0);
-        sessionStorage.setItem(Config.USUARIO, '');
-        sessionStorage.setItem(Config.CodigoUsuario, '');
-        toast.success('Volte sempre!');
-        navigate('/', {replace: true});
-    }
+  function sair(){
+      localStorage.setItem(Config.LOGADO, 0);
+      localStorage.setItem(Config.USUARIO, '');
+      localStorage.setItem(Config.NOMEUSER, '');
+      toast.success('Volte sempre!');
+      navigate('/', {replace: true});
+  }
 
   return (
     <AppBar position="static" className='varBarResponsive'>
@@ -169,7 +169,7 @@ const ResponsiveAppBar = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             {
-                sessionStorage.getItem(Config.LOGADO) == null || sessionStorage.getItem(Config.LOGADO) === '0'?
+                localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0'?
                 <>
                 <h3>
                 <Link className='logo' to='/login'><span>Login</span></Link>
