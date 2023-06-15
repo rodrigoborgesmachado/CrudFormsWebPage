@@ -32,9 +32,13 @@ function Users(){
         navigate('/', {replace: true});
     }
 
-function AdicionarUsuario(){
-    navigate('/criarUsuario', {replace: true});
-}
+    function AbreEdicao(user){
+        navigate('/editar/' + user, {replace: true});
+    }
+
+    function AdicionarUsuario(){
+        navigate('/criarUsuario', {replace: true});
+    }
 
     if(loadding){
         return(
@@ -47,7 +51,7 @@ function AdicionarUsuario(){
     return(
         <div className="containerpage">
             <div className='tabelaUsers'>
-            <button onClick={AdicionarUsuario}>Adicionar usuário</button>
+            <button className='buttonAdicionar' onClick={AdicionarUsuario}>Adicionar usuário</button>
             <Table>
                 <thead>
                     <tr>
@@ -70,6 +74,8 @@ function AdicionarUsuario(){
                             <h3>
                             Email
                             </h3>
+                        </th>
+                        <th>
                         </th>
                     </tr>
                 </thead>
@@ -97,6 +103,11 @@ function AdicionarUsuario(){
                                         <h4>
                                             {item.email}
                                         </h4>
+                                    </td>
+                                    <td>
+                                        <button className='buttonEditar' onClick={() => AbreEdicao(item.codigo)}>
+                                            Editar
+                                        </button>
                                     </td>
                                 </tr>
                             )

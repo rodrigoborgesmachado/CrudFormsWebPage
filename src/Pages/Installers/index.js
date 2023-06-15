@@ -17,7 +17,7 @@ function Installers(){
             await api.get('/CrudFormsInstalador')
             .then((response) => {
                 if(response.data.success){
-                    setLista(response.data.object);
+                    setLista(response.data.object.reverse());
                 }
                 setLoadding(false);
             }).catch(() => {

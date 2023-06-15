@@ -10,6 +10,7 @@ function CriarUsuario(){
     const navigate = useNavigate();
 
     const[login, setLogin] = useState('');
+    const[nome, setNome] = useState('');
     const[email, setEmail] = useState('');
     const[senha, setSenha] = useState('');
     const[administrador, setAdministrador] = useState(true);
@@ -35,27 +36,24 @@ function CriarUsuario(){
         setLoadding(true);
         let logado = localStorage.getItem(Config.LOGADO) != null && localStorage.getItem(Config.LOGADO) === '1';
 
-        await api.post(`/InsereUsuario.php`, 
+        await api.post(`/UsuariosCrudForms`, 
         {
-            Login: login,
-            Email: email,
-            Password:stringToHash(senha),
-            Administrador: administrador ? '1' : '0',
-            Desenvolvedor: desenvolvedor ? '1' : '0',
-            UsuarioPai: logado ? localStorage.getItem(Config.CodigoUsuario) : '-1'
+            login: login,
+            email: email,
+            senha:stringToHash(senha) + '',
+            nome: nome,
+            administrador: administrador ? '1' : '0',
+            desenvolvedor: desenvolvedor ? '1' : '0',
+            usuarioPai: localStorage.getItem(Config.LOGADO) == '0' ? -1 : null 
         }
         )
             .then((response) => {
                 setLoadding(false);
-                if(response.data.Sucesso && !logado){
-                    localStorage.setItem(Config.LOGADO, 0);
-                    localStorage.setItem(Config.USUARIO, '');
-                    localStorage.setItem(Config.CodigoUsuario, '');
-                    
+                if(response.data.success && !logado){
                     toast.success('Usuário criado com sucesso! Login Liberado!');
                     navigate('/login', {replace: true});
                 }
-                else if (response.data.Sucesso && logado){
+                else if (response.data.success && logado){
                     toast.success('Usuário criado com sucesso! Seu novo usuário já pode usar o CrudForms!');
                     navigate('/usuarios', {replace: true});
                 }
@@ -92,6 +90,10 @@ function CriarUsuario(){
                     Email
                 </h2>
                 <input type='email' value={email} name='email' id='email' onChange={(e) => setEmail(e.target.value)}></input>
+                <h2>
+                    Nome
+                </h2>
+                <input type='text' value={nome} name='nome' id='nome' onChange={(e) => setNome(e.target.value)}></input>
                 <br/>
                 <div className='checkboxdiv'>
                 <Checkbox label="Administrador" checked={administrador} color="secondary" border-color="white" onChange={(e) => setAdministrador(e.target.checked)}/>

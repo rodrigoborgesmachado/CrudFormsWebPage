@@ -13,19 +13,40 @@
     flex-direction: column;
 }
 
-.tabelaUsers button{
+.buttonAdicionar{
     margin-left: 5%;
     margin-top: 10px;
     margin-bottom: 50px;
     padding: 10px;
     width: 20%;
     font-size: 16px;
-    background-color: #116feb;
-    color: #FFF;
+    background-color: beige;
+    color: #000000;
     border-radius: 10px;
     text-decoration:none;
     cursor: pointer;
 }
+
+.buttonAdicionar:hover{
+    background-color: rgb(37, 26, 166);
+    color: #FFF;
+  }
+
+.buttonEditar{
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    background-color: beige;
+    color: #000000;
+    border-radius: 10px;
+    text-decoration:none;
+    cursor: pointer;
+}
+
+.buttonEditar:hover{
+    background-color: rgb(37, 26, 166);
+    color: #FFF;
+  }
 
 table, tr, td{
     align-items: center;

@@ -71,6 +71,12 @@ const ResponsiveAppBar = () => {
       localStorage.setItem(Config.LOGADO, 0);
       localStorage.setItem(Config.USUARIO, '');
       localStorage.setItem(Config.NOMEUSER, '');
+      localStorage.setItem(Config.TOKEN, '');
+      localStorage.removeItem(Config.LOGADO);
+      localStorage.removeItem(Config.USUARIO);
+      localStorage.removeItem(Config.NOMEUSER);
+      localStorage.removeItem(Config.TOKEN);
+
       toast.success('Volte sempre!');
       navigate('/', {replace: true});
   }
