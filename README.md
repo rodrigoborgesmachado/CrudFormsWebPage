@@ -1,3 +1,3 @@
 # Crud Forms
 
-Disponível em: [crudforms](https://crudsunsale.netlify.app/)
+Disponível em: [crudforms](https://www.crudforms.com/)
