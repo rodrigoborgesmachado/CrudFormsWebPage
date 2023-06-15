@@ -1,9 +1,9 @@
-.containerpage h3{
-    padding: 20px;
-}
-
 .texto{
-    padding: 0;
+    padding: 2%;
     width: 90%;
     height: 100%;
+}
+
+.texto h2{
+    padding-bottom: 10px;
 }

@@ -6,6 +6,7 @@ import Login from './Pages/Login';
 import Modules from './Pages/Modules';
 import CriarUsuario from './Pages/SingIn';
 import Users from './Pages/Users';
+import EditarUsuario from './Pages/EditUser';
 
 function RoutesApp(){
     return(
@@ -19,6 +20,7 @@ function RoutesApp(){
                 <Route path='/usuarios' element={<Users/>}/>
                 <Route path='/modulos' element={<Modules/>}/>
                 <Route path='/instaladores' element={<Installers/>}/>
+                <Route path='/editar/:filtro' element={<EditarUsuario/>}/>
             </Routes>
         </BrowserRouter>
 

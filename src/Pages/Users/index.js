@@ -8,16 +8,15 @@ import Config from './../../config.json';
 function Users(){
     const[loadding, setLoadding] = useState(true);
     const[lista, setLista] = useState({});
-    const[usuarioLogado] = useState(parseInt(sessionStorage.getItem(Config.CodigoUsuario) ? sessionStorage.getItem(Config.CodigoUsuario) : -1));
     const navigate = useNavigate();
 
     useEffect(() => {
 
-        async function BuscarRanking(){
-            await api.get('/BuscarUsuarios.php?codigoUsuarioPai=' + sessionStorage.getItem(Config.CodigoUsuario))
+        async function BuscarUsuarios(){
+            await api.get('/UsuariosCrudForms/users')
             .then((response) => {
-                if(response.data.Sucesso){
-                    setLista(response.data.Lista);
+                if(response.data.success){
+                    setLista(response.data.object);
                 }
                 setLoadding(false);
             }).catch(() => {
@@ -26,16 +25,20 @@ function Users(){
             });
         }
 
-        BuscarRanking();
+        BuscarUsuarios();
     }, [])
 
-    if(sessionStorage.getItem(Config.LOGADO) == null || sessionStorage.getItem(Config.LOGADO) === '0'){
+    if(localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0'){
         navigate('/', {replace: true});
     }
 
-function AdicionarUsuario(){
-    navigate('/criarUsuario', {replace: true});
-}
+    function AbreEdicao(user){
+        navigate('/editar/' + user, {replace: true});
+    }
+
+    function AdicionarUsuario(){
+        navigate('/criarUsuario', {replace: true});
+    }
 
     if(loadding){
         return(
@@ -48,7 +51,7 @@ function AdicionarUsuario(){
     return(
         <div className="containerpage">
             <div className='tabelaUsers'>
-            <button onClick={AdicionarUsuario}>Adicionar usuário</button>
+            <button className='buttonAdicionar' onClick={AdicionarUsuario}>Adicionar usuário</button>
             <Table>
                 <thead>
                     <tr>
@@ -72,32 +75,39 @@ function AdicionarUsuario(){
                             Email
                             </h3>
                         </th>
+                        <th>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         lista?.map((item) => {
                             return(
-                                <tr key={item.Codigo}>
+                                <tr key={item.codigo}>
                                     <td>
                                         <h4>
-                                            {item.Login}
+                                            {item.login}
                                         </h4>
                                     </td>
                                     <td>
                                         <h4>
-                                        {item.Administrador === '1' ? 'Sim' : 'Não'}
+                                            {item.administrador === '1' ? 'Sim' : 'Não'}
                                         </h4>
                                     </td>
                                     <td>
                                         <h4>
-                                        {item.Desenvolvedor === '1' ? 'Sim' : 'Não'}
+                                            {item.desenvolvedor === '1' ? 'Sim' : 'Não'}
                                         </h4>
                                     </td>
                                     <td>
                                         <h4>
-                                            {item.Email}
+                                            {item.email}
                                         </h4>
+                                    </td>
+                                    <td>
+                                        <button className='buttonEditar' onClick={() => AbreEdicao(item.codigo)}>
+                                            Editar
+                                        </button>
                                     </td>
                                 </tr>
                             )

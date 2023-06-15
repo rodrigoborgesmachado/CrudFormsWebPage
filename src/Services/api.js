@@ -1,7 +1,14 @@
 import axios from "axios";
+import Config from './../config.json';
 
 const api = axios.create({
-    baseURL: 'http://crudforms.sunsalesystem.com.br/PHP'
+    baseURL: 'https://localhost:7119/api'
 })
+
+const token = localStorage.getItem(Config.TOKEN);
+
+if (token) {
+  api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
 export default api;
