@@ -14,3 +14,15 @@
 .texto{
     width: 80%;
 }
+
+.texto img{
+    max-width: -webkit-fill-available;
+}
+
+.menu h3{
+    cursor: pointer;
+}
+
+.texto a{
+    cursor: pointer;
+}

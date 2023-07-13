@@ -18,7 +18,7 @@ function RoutesApp(){
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/criarUsuario' element={<CriarUsuario/>}/>
                 <Route path='/usuarios' element={<Users/>}/>
-                <Route path='/modulos' element={<Modules/>}/>
+                <Route path='/modulos/:filtro' element={<Modules/>}/>
                 <Route path='/instaladores' element={<Installers/>}/>
                 <Route path='/editar/:filtro' element={<EditarUsuario/>}/>
             </Routes>

@@ -49,7 +49,7 @@ const ResponsiveAppBar = () => {
         navigate('/Home', {replace: true});
     }
     else if(page === pages[1]){
-      navigate('/modulos', {replace: true});
+      navigate('/modulos/1', {replace: true});
     }
     else if(page === pages[2]){
         navigate('/instaladores', {replace: true});
