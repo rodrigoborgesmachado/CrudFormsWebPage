@@ -1,5 +1,5 @@
 .varBarResponsive{
-  background-color: #232323;
+  background-color: #FFF;
     width: 100%;
     margin: 0;
     padding: 0;
@@ -8,16 +8,18 @@
 
 .conNav{
     width: 100%;
-  background-color: #232323;
+  background-color: #FFF;
+  opacity : 0.9;
 }
 
 .toolNav{
     width: 100%;
-  background-color: #232323;
+  background-color: #FFF;
     opacity : 0.9;
 }
 
 .varBarResponsive a{
     text-decoration: none;
-    color: #fff;
+    color: #000;
+    opacity : 0.9;
 }

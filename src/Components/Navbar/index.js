@@ -85,7 +85,7 @@ const ResponsiveAppBar = () => {
     <AppBar position="static" className='varBarResponsive'>
       <Container maxWidth="xl" className='conNav'>
         <Toolbar disableGutters className='toolNav'>
-          <BatteryChargingFullIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <BatteryChargingFullIcon sx={{ display: { xs: 'none', md: 'flex', color:'black' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -111,7 +111,7 @@ const ResponsiveAppBar = () => {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color="black"
             >
               <MenuIcon />
             </IconButton>
@@ -166,7 +166,7 @@ const ResponsiveAppBar = () => {
               <Button
                 key={page}
                 onClick={(e) => SelecionaOpcao(page)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'black', display: 'block' }}
               >
                 {page}
               </Button>
