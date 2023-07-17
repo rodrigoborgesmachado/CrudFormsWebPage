@@ -33,6 +33,9 @@
 }
 
 .login a{
+    width: 20%;
+    height: 5%;
+    padding: 5px;
     border-radius: 4px;
-    font-size: x-small;    
+    font-size: x-small;   
 }
