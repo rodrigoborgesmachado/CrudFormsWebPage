@@ -61,7 +61,9 @@ function Modules() {
                 <div className='texto'>
                     <h3><b>LOGIN: </b><br /><br /></h3>
                     <h4>
-                        O controle de usuário e senha são feitos diretamente pelo site, na opção Login. Você pode criar seu usuário e criar também usuários para o seu time, colocando as configurações desejadas de acesso.
+                        O controle de usuário e senha são feitos diretamente pelo site, na opção Login. 
+                        Você pode criar seu usuário e criar também usuários para o seu time, 
+                        colocando as configurações desejadas de acesso.
                         <br/>
                         <img src={require('../../Assets/Images/6 - Login.png')} alt="" /><br/>
                         Com o usuário e senha irá abrir a tela principal do sistema.
