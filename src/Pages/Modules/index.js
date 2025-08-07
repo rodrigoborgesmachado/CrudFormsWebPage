@@ -409,7 +409,6 @@ function Modules() {
                 <div className='texto'>
                 </div>
             }
-            </div >
         </Container>
     )
 }
