@@ -1,4 +1,3 @@
-import './index.css';
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -14,8 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 import Config from './../../config.json';
-import { useNavigate } from 'react-router-dom';
-import {Link} from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const pages = ['Home', 'Módulos', 'Instaladores'];
@@ -82,15 +80,15 @@ const ResponsiveAppBar = () => {
   }
 
   return (
-    <AppBar position="static" className='varBarResponsive'>
-      <Container maxWidth="xl" className='conNav'>
-        <Toolbar disableGutters className='toolNav'>
-          <BatteryChargingFullIcon sx={{ display: { xs: 'none', md: 'flex', color:'black' }, mr: 1 }} />
+    <AppBar position="static" color="primary" sx={{ mb: 2 }}>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <BatteryChargingFullIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -101,7 +99,7 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            <a href='/'>CrudForms</a>
+            CrudForms
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -111,7 +109,7 @@ const ResponsiveAppBar = () => {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="black"
+              color="inherit"
             >
               <MenuIcon />
             </IconButton>
@@ -146,8 +144,8 @@ const ResponsiveAppBar = () => {
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href="/"
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -159,14 +157,14 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            <a href='/'>ConQuest</a>
+            CrudForms
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={(e) => SelecionaOpcao(page)}
-                sx={{ my: 2, color: 'black', display: 'block' }}
+                sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
               </Button>
@@ -176,11 +174,11 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             {
                 localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0'?
-                <>
-                <h3>
-                <Link className='logo' to='/login'><span>Login</span></Link>
-                </h3>
-                </>
+                (
+                  <Button color="inherit" component={Link} to="/login">
+                    Login
+                  </Button>
+                )
                 :
                 <>
                 <Tooltip title="Opções">
@@ -208,7 +206,7 @@ const ResponsiveAppBar = () => {
                     <MenuItem key={setting} onClick={(e) => SelecionaOpcaoUsuario(setting)}>
                       <Typography textAlign="center">
                         {setting}
-                        </Typography>
+                      </Typography>
                     </MenuItem>
                   ))}
                 </Menu>

@@ -1,10 +1,17 @@
-import './index.css';
 import { useState } from 'react';
 import Config from '../../config.json';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import api from '../../Services/api';
-import Checkbox from '@mui/material/Checkbox';
+import {
+  Container,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  FormControlLabel,
+  Checkbox
+} from '@mui/material';
 
 function CriarUsuario(){
     const navigate = useNavigate();
@@ -67,50 +74,28 @@ function CriarUsuario(){
             });
     }
 
-    if(loadding){
-        return(
-            <div className='loaddingDiv'>
-                <img src={require('../../Assets/hug.gif')} alt="Loading..." />
-            </div>
-        )
-    }
+      if(loadding){
+          return(
+              <Container sx={{ display:'flex', justifyContent:'center', mt:4 }}>
+                  <img src={require('../../Assets/hug.gif')} alt="Loading..." />
+              </Container>
+          )
+      }
 
-    return(
-        <div className="containerpage">
-            <div className='criarUsuario'>
-                <h2>
-                    Login
-                </h2>
-                <input type='text' value={login} onChange={(e) => setLogin(e.target.value)}></input>
-                <h2>
-                    Senha
-                </h2>
-                <input type='password' value={senha} onChange={(e) => setSenha(e.target.value)}></input>
-                <h2>
-                    Email
-                </h2>
-                <input type='email' value={email} name='email' id='email' onChange={(e) => setEmail(e.target.value)}></input>
-                <h2>
-                    Nome
-                </h2>
-                <input type='text' value={nome} name='nome' id='nome' onChange={(e) => setNome(e.target.value)}></input>
-                <br/>
-                <div className='checkboxdiv'>
-                <Checkbox label="Administrador" checked={administrador} color="secondary" border-color="white" onChange={(e) => setAdministrador(e.target.checked)}/>
-                <span onClick={() => setAdministrador(!administrador)}>
-                <h3>Administrador</h3>
-                </span>
-                </div>
-                <div className='checkboxdiv'>
-                <Checkbox label="Desenvolvedor" checked={desenvolvedor} color="secondary" onChange={(e) => setDesenvolvedor(e.target.checked)}/>
-                <span onClick={() => setDesenvolvedor(!desenvolvedor)}>
-                <h3>Desenvolvedor</h3>
-                </span>
-                </div>
-                <button onClick={confirmaFormulario}>Confirma</button>
-            </div>
-        </div>
-    )
+      return(
+          <Container maxWidth="sm" sx={{ mt:4 }}>
+            <Paper sx={{ p:3 }}>
+              <Typography variant="h5" mb={2}>Criar Usuário</Typography>
+              <TextField label="Login" fullWidth margin="normal" value={login} onChange={(e) => setLogin(e.target.value)} />
+              <TextField label="Senha" type="password" fullWidth margin="normal" value={senha} onChange={(e) => setSenha(e.target.value)} />
+              <TextField label="Email" type="email" fullWidth margin="normal" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <TextField label="Nome" fullWidth margin="normal" value={nome} onChange={(e) => setNome(e.target.value)} />
+              <FormControlLabel control={<Checkbox checked={administrador} onChange={(e) => setAdministrador(e.target.checked)} />} label="Administrador" />
+              <FormControlLabel control={<Checkbox checked={desenvolvedor} onChange={(e) => setDesenvolvedor(e.target.checked)} />} label="Desenvolvedor" />
+              <Button variant="contained" sx={{ mt:2 }} onClick={confirmaFormulario}>Confirma</Button>
+            </Paper>
+          </Container>
+      )
 }
 
 export default CriarUsuario;

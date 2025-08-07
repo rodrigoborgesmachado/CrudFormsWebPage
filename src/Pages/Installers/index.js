@@ -1,14 +1,23 @@
-import './index.css';
 import api from '../../Services/api.js';
 import { useState, useEffect } from 'react';
-import { Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import { toast } from 'react-toastify';
+import {
+  Container,
+  Paper,
+  Typography,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Button
+} from '@mui/material';
 
 function Installers(){
     const[loadding, setLoadding] = useState(true);
-    const[lista, setLista] = useState({});
+    const[lista, setLista] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -41,55 +50,39 @@ function Installers(){
     }
 
     if(loadding){
-        return(
-            <div className='loaddingDiv'>
-                <img src={require('../../Assets/hug.gif')} alt="Loading..." />
-            </div>
-        )
+      return(
+          <Container sx={{ display:'flex', justifyContent:'center', mt:4 }}>
+              <img src={require('../../Assets/hug.gif')} alt="Loading..." />
+          </Container>
+      )
     }
 
-    return(
-        <div className="containerpage">
-            <div className='tabelaInstaladores'>
-            <Table>
-                <thead>
-                    <tr>
-                        <th>
-                            <h3>
-                            Versão
-                            </h3>
-                        </th>
-                        <th>
-                            <h3>
-                            Link
-                            </h3>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        lista?.map((item) => {
-                            return(
-                                <tr key={item.Codigo}>
-                                    <td>
-                                        <h4>
-                                            {item.versao}
-                                        </h4>
-                                    </td>
-                                    <td>
-                                        <h4>
-                                        <a className='botaoBaixarArquivo' onClick={() => Baixar(item.diretorio)}><CloudDownloadIcon/> Baixar versão {item.Versao}</a>
-                                        </h4>
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </Table>
-            </div>
-        </div>
-    )
+      return(
+          <Container maxWidth="md" sx={{ mt:4 }}>
+            <Paper sx={{ p:2 }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell><Typography variant="h6">Versão</Typography></TableCell>
+                    <TableCell><Typography variant="h6">Link</Typography></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {lista?.map((item) => (
+                    <TableRow key={item.Codigo}>
+                      <TableCell>{item.versao}</TableCell>
+                      <TableCell>
+                        <Button startIcon={<CloudDownloadIcon />} onClick={() => Baixar(item.diretorio)}>
+                          Baixar versão {item.Versao}
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Paper>
+          </Container>
+      )
 }
 
 export default Installers;

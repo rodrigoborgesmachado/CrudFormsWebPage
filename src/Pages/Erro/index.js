@@ -1,15 +1,15 @@
-import {Link} from 'react-router-dom';
-import './style.css';
+import { Link } from 'react-router-dom';
+import { Container, Paper, Typography, Button } from '@mui/material';
 
 function Erro(){
     return(
-        <div className='containerpage'>
-            <div className="not-found">
-                <h1>404</h1>
-                <h2>Página não encontrada</h2>
-                <Link to="/">Home</Link>
-            </div>
-        </div>
+        <Container maxWidth="sm" sx={{ mt:4 }}>
+            <Paper sx={{ p:3, textAlign:'center' }}>
+                <Typography variant="h3">404</Typography>
+                <Typography variant="h5" mb={2}>Página não encontrada</Typography>
+                <Button variant="contained" component={Link} to="/">Home</Button>
+            </Paper>
+        </Container>
     )
 }
 

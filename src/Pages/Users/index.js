@@ -1,13 +1,22 @@
-import './index.css';
 import api from '../../Services/api.js';
 import { useState, useEffect } from 'react';
-import { Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Config from './../../config.json';
+import {
+  Container,
+  Paper,
+  Typography,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Button
+} from '@mui/material';
 
 function Users(){
     const[loadding, setLoadding] = useState(true);
-    const[lista, setLista] = useState({});
+    const[lista, setLista] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -41,83 +50,46 @@ function Users(){
     }
 
     if(loadding){
-        return(
-            <div className='loaddingDiv'>
-                <img src={require('../../Assets/hug.gif')} alt="Loading..." />
-            </div>
-        )
+      return(
+          <Container sx={{ display:'flex', justifyContent:'center', mt:4 }}>
+              <img src={require('../../Assets/hug.gif')} alt="Loading..." />
+          </Container>
+      )
     }
 
-    return(
-        <div className="containerpage">
-            <div className='tabelaUsers'>
-            <button className='buttonAdicionar' onClick={AdicionarUsuario}>Adicionar usuário</button>
-            <Table>
-                <thead>
-                    <tr>
-                        <th>
-                            <h3>
-                            Login
-                            </h3>
-                        </th>
-                        <th>
-                            <h3>
-                            Administrador
-                            </h3>
-                        </th>
-                        <th>
-                            <h3>
-                            Desenvolvedor
-                            </h3>
-                        </th>
-                        <th>
-                            <h3>
-                            Email
-                            </h3>
-                        </th>
-                        <th>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        lista?.map((item) => {
-                            return(
-                                <tr key={item.codigo}>
-                                    <td>
-                                        <h4>
-                                            {item.login}
-                                        </h4>
-                                    </td>
-                                    <td>
-                                        <h4>
-                                            {item.administrador === '1' ? 'Sim' : 'Não'}
-                                        </h4>
-                                    </td>
-                                    <td>
-                                        <h4>
-                                            {item.desenvolvedor === '1' ? 'Sim' : 'Não'}
-                                        </h4>
-                                    </td>
-                                    <td>
-                                        <h4>
-                                            {item.email}
-                                        </h4>
-                                    </td>
-                                    <td>
-                                        <button className='buttonEditar' onClick={() => AbreEdicao(item.codigo)}>
-                                            Editar
-                                        </button>
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </Table>
-            </div>
-        </div>
-    )
+      return(
+          <Container maxWidth="md" sx={{ mt:4 }}>
+            <Paper sx={{ p:2 }}>
+              <Button variant="contained" onClick={AdicionarUsuario} sx={{ mb:2 }}>
+                Adicionar usuário
+              </Button>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell><Typography variant="h6">Login</Typography></TableCell>
+                    <TableCell><Typography variant="h6">Administrador</Typography></TableCell>
+                    <TableCell><Typography variant="h6">Desenvolvedor</Typography></TableCell>
+                    <TableCell><Typography variant="h6">Email</Typography></TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {lista?.map((item) => (
+                    <TableRow key={item.codigo}>
+                      <TableCell>{item.login}</TableCell>
+                      <TableCell>{item.administrador === '1' ? 'Sim' : 'Não'}</TableCell>
+                      <TableCell>{item.desenvolvedor === '1' ? 'Sim' : 'Não'}</TableCell>
+                      <TableCell>{item.email}</TableCell>
+                      <TableCell>
+                        <Button variant="outlined" onClick={() => AbreEdicao(item.codigo)}>Editar</Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Paper>
+          </Container>
+      )
 }
 
 export default Users;

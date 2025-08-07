@@ -1,5 +1,6 @@
 import './index.css';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Container } from '@mui/material';
 
 function Modules() {
     const navigate = useNavigate();
@@ -10,7 +11,7 @@ function Modules() {
     }
 
     return (
-        <div className='containerpage'>
+        <Container className='containerpage'>
             <div className='menu'>
                 <h3 onClick={() => abreTela(1)}>➡️ Introdução</h3>
                 <h3 onClick={() => abreTela(17)}>➡️ Instalação</h3>
@@ -408,7 +409,8 @@ function Modules() {
                 <div className='texto'>
                 </div>
             }
-        </div >
+            </div >
+        </Container>
     )
 }
 
