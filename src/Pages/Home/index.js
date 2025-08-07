@@ -1,15 +1,13 @@
-import './index.css';
+import { Container, Paper, Typography } from '@mui/material';
 
 function Home(){
     return(
-        <div className='containerpage'>
-            <div className='texto'>
-                <h2>
-                    <span>
-                        Crud Forms
-                    </span>
-                </h2>
-                <h3>
+        <Container className='containerpage'>
+            <Paper elevation={0} sx={{ p: 2 }}>
+                <Typography variant="h4" component="h2" gutterBottom>
+                    Crud Forms
+                </Typography>
+                <Typography variant="body1" component="div">
                     Bem-vindo ao mundo mágico do CrudForms! 🧙✨
                     <br/>
                     <br/>
@@ -29,9 +27,9 @@ function Home(){
                     <br/>
                     <br/>
                     Bem-vindo ao mundo encantado do CrudForms, onde a magia encontra a tecnologia. Faça parte dessa jornada e transforme suas tarefas em algo simplesmente mágico! ✨🪄💻
-                </h3>
-            </div>
-        </div>
+                </Typography>
+            </Paper>
+        </Container>
     )
 }
 

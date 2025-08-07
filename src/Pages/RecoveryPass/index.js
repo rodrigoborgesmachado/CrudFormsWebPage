@@ -1,9 +1,15 @@
-import './style.css';
 import api from '../../Services/api.js';
 import Config from './../../config.json';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import {
+  Container,
+  Paper,
+  Typography,
+  TextField,
+  Button
+} from '@mui/material';
 
 function RecoveryPass(){
     const navigate = useNavigate();
@@ -33,25 +39,23 @@ function RecoveryPass(){
         navigate('/', {replace: true});
     }
 
-    if(loadding){
-        return(
-            <div className='loaddingDiv'>
-                <img src={require('../../Assets/hug.gif')} alt="Loading..." />
-            </div>
-        )
-    }
+      if(loadding){
+          return(
+              <Container sx={{ display:'flex', justifyContent:'center', mt:4 }}>
+                  <img src={require('../../Assets/hug.gif')} alt="Loading..." />
+              </Container>
+          )
+      }
 
-    return (
-        <div className="containerpage">
-            <div className='login'>
-                <h2>
-                    Login
-                </h2>
-                <input type="email" name='email' id='email' value={email} onChange={(e) => setEmail(e.target.value)} required={true}></input>
-                <button onClick={reset}>Resetar a senha</button>
-            </div>
-        </div>
-    )
+      return (
+          <Container maxWidth="sm" sx={{ mt:4 }}>
+            <Paper sx={{ p:3 }}>
+              <Typography variant="h5" mb={2}>Login</Typography>
+              <TextField type="email" label="Email" fullWidth margin="normal" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              <Button variant="contained" onClick={reset}>Resetar a senha</Button>
+            </Paper>
+          </Container>
+      )
 }
 
 export default RecoveryPass;

@@ -1,9 +1,15 @@
-import './style.css';
 import api from '../../Services/api.js';
 import Config from './../../config.json';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useParams, useNavigate } from 'react-router-dom';
+import {
+  Container,
+  Paper,
+  Typography,
+  TextField,
+  Button
+} from '@mui/material';
 
 function ResetPass(){
     const navigate = useNavigate();
@@ -50,25 +56,23 @@ function ResetPass(){
         navigate('/', {replace: true});
     }
 
-    if(loadding){
-        return(
-            <div className='loaddingDiv'>
-                <img src={require('../../Assets/hug.gif')} alt="Loading..." />
-            </div>
-        )
-    }
+      if(loadding){
+          return(
+              <Container sx={{ display:'flex', justifyContent:'center', mt:4 }}>
+                  <img src={require('../../Assets/hug.gif')} alt="Loading..." />
+              </Container>
+          )
+      }
 
-    return (
-        <div className="containerpage">
-            <div className='login'>
-                <h2>
-                    Nova senha
-                </h2>
-                <input type="password" name='pass' id='pass' value={senha} onChange={(e) => setSenha(e.target.value)} required={true}></input>
-                <button onClick={reset}>Resetar a senha</button>
-            </div>
-        </div>
-    )
+      return (
+          <Container maxWidth="sm" sx={{ mt:4 }}>
+            <Paper sx={{ p:3 }}>
+              <Typography variant="h5" mb={2}>Nova senha</Typography>
+              <TextField type="password" fullWidth margin="normal" value={senha} onChange={(e) => setSenha(e.target.value)} required />
+              <Button variant="contained" onClick={reset}>Resetar a senha</Button>
+            </Paper>
+          </Container>
+      )
 }
 
 export default ResetPass;
