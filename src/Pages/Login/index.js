@@ -1,17 +1,17 @@
-import './index.css';
 import api from '../../Services/api.js';
 import Config from './../../config.json';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import { Container, Paper, Typography, TextField, Button, Link, CircularProgress, Box } from '@mui/material';
 
 function Login(){
     const navigate = useNavigate();
 
-    const[login, setlogin] = useState('');
-    const[senha, setSenha] = useState('');
-    const[loadding, setLoadding] = useState(false);
+    const [login, setLogin] = useState('');
+    const [senha, setSenha] = useState('');
+    const [loadding, setLoadding] = useState(false);
 
     function stringToHash(string) {
                   
@@ -31,14 +31,13 @@ function Login(){
     async function logar(){
         setLoadding(true);
         await api.post(`/Token/crudforms`, {username: login, password: stringToHash(senha)+''})
-        .then((response) => {
+            .then((response) => {
                 setLoadding(false);
                 localStorage.setItem(Config.LOGADO, 1);
                 localStorage.setItem(Config.USUARIO, response.data.username);
                 localStorage.setItem(Config.NOMEUSER, response.data.nome);
                 localStorage.setItem(Config.TOKEN, response.data.token);
                 toast.success('Bem vindo ' + response.data.nome + '!');
-
                 navigate('/', {replace: true});
             }).catch(() => {
                 setLoadding(false);
@@ -57,28 +56,29 @@ function Login(){
 
     if(loadding){
         return(
-            <div className='loaddingDiv'>
-                <img src={require('../../Assets/hug.gif')} alt="Loading..." />
-            </div>
+            <Box className='loaddingDiv'>
+                <CircularProgress />
+            </Box>
         )
     }
 
     return (
-        <div className="containerpage">
-            <div className='login'>
-                <h2>
+        <Container className="containerpage" maxWidth="sm">
+            <Paper elevation={0} sx={{ p: 4, width: '100%' }}>
+                <Typography variant="h4" component="h2" gutterBottom>
                     Login
-                </h2>
-                <input type="text" name='login' id='login' value={login} onChange={(e) => setlogin(e.target.value)} required={true}></input>
-                <h2>
-                    Senha
-                </h2>
-                <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required={true}></input>
-                <Link className='botao' to={`/recoverypass`}>Esqueci minha senha</Link>
-                <button onClick={logar}>Logar</button>
-                <button onClick={criarUsuario}>Criar usuário</button>
-            </div>
-        </div>
+                </Typography>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <TextField label="Login" value={login} onChange={(e) => setLogin(e.target.value)} required />
+                    <TextField label="Senha" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} required />
+                    <Link component={RouterLink} to={`/recoverypass`} sx={{ alignSelf: 'flex-start' }}>
+                        Esqueci minha senha
+                    </Link>
+                    <Button variant="contained" onClick={logar}>Logar</Button>
+                    <Button variant="outlined" onClick={criarUsuario}>Criar usuário</Button>
+                </Box>
+            </Paper>
+        </Container>
     )
 }
 
