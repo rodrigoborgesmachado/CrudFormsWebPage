@@ -11,85 +11,128 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Button
+  Button,
+  Box
 } from '@mui/material';
 
-function Users(){
-    const[loadding, setLoadding] = useState(true);
-    const[lista, setLista] = useState([]);
-    const navigate = useNavigate();
+function Users() {
+  const [loadding, setLoadding] = useState(true);
+  const [lista, setLista] = useState([]);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-
-        async function BuscarUsuarios(){
-            await api.get('/UsuariosCrudForms/users')
-            .then((response) => {
-                if(response.data.success){
-                    setLista(response.data.object);
-                }
-                setLoadding(false);
-            }).catch(() => {
-                navigate('/', {replace: true});
-                return;
-            });
+  useEffect(() => {
+    async function BuscarUsuarios() {
+      try {
+        const response = await api.get('/UsuariosCrudForms/users');
+        if (response.data.success) {
+          setLista(response.data.object);
         }
-
-        BuscarUsuarios();
-    }, [])
-
-    if(localStorage.getItem(Config.LOGADO) == null || localStorage.getItem(Config.LOGADO) === '0'){
-        navigate('/', {replace: true});
+      } catch {
+        navigate('/', { replace: true });
+      } finally {
+        setLoadding(false);
+      }
     }
 
-    function AbreEdicao(user){
-        navigate('/editar/' + user, {replace: true});
-    }
+    BuscarUsuarios();
+  }, []);
 
-    function AdicionarUsuario(){
-        navigate('/criarUsuario', {replace: true});
-    }
+  if (
+    localStorage.getItem(Config.LOGADO) == null ||
+    localStorage.getItem(Config.LOGADO) === '0'
+  ) {
+    navigate('/', { replace: true });
+  }
 
-    if(loadding){
-      return(
-          <Container sx={{ display:'flex', justifyContent:'center', mt:4 }}>
-              <img src={require('../../Assets/hug.gif')} alt="Loading..." />
-          </Container>
-      )
-    }
+  const AbreEdicao = (user) => {
+    navigate('/editar/' + user, { replace: true });
+  };
 
-      return(
-          <Container maxWidth="md" sx={{ mt:4 }}>
-            <Paper sx={{ p:2 }}>
-              <Button variant="contained" onClick={AdicionarUsuario} sx={{ mb:2 }}>
-                Adicionar usuário
-              </Button>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell><Typography variant="h6">Login</Typography></TableCell>
-                    <TableCell><Typography variant="h6">Administrador</Typography></TableCell>
-                    <TableCell><Typography variant="h6">Desenvolvedor</Typography></TableCell>
-                    <TableCell><Typography variant="h6">Email</Typography></TableCell>
-                    <TableCell></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {lista?.map((item) => (
-                    <TableRow key={item.codigo}>
-                      <TableCell>{item.login}</TableCell>
-                      <TableCell>{item.administrador === '1' ? 'Sim' : 'Não'}</TableCell>
-                      <TableCell>{item.desenvolvedor === '1' ? 'Sim' : 'Não'}</TableCell>
-                      <TableCell>{item.email}</TableCell>
-                      <TableCell>
-                        <Button variant="outlined" onClick={() => AbreEdicao(item.codigo)}>Editar</Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Paper>
-          </Container>
-      )
+  const AdicionarUsuario = () => {
+    navigate('/criarUsuario', { replace: true });
+  };
+
+  if (loadding) {
+    return (
+      <Container sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+        <img src={require('../../Assets/hug.gif')} alt="Loading..." />
+      </Container>
+    );
+  }
+
+  return (
+    <Container maxWidth="md" sx={{ mt: 4 }}>
+      <Paper elevation={3} sx={{ p: 3, borderRadius: 3 }}>
+        {/* Cabeçalho */}
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+          <Typography variant="h5" fontWeight="bold">
+            Lista de Usuários
+          </Typography>
+          <Button
+            variant="contained"
+            onClick={AdicionarUsuario}
+            sx={{
+              background: 'linear-gradient(to right, #1976d2, #42a5f5)',
+              fontWeight: 'bold',
+              borderRadius: 2,
+              px: 2
+            }}
+          >
+            + Adicionar Usuário
+          </Button>
+        </Box>
+
+        {/* Tabela */}
+        <Table sx={{ borderRadius: 2, overflow: 'hidden' }}>
+          <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
+            <TableRow>
+              <TableCell><Typography fontWeight="bold">Login</Typography></TableCell>
+              <TableCell><Typography fontWeight="bold">Administrador</Typography></TableCell>
+              <TableCell><Typography fontWeight="bold">Desenvolvedor</Typography></TableCell>
+              <TableCell><Typography fontWeight="bold">Email</Typography></TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {lista.length > 0 ? (
+              lista.map((item) => (
+                <TableRow
+                  key={item.codigo}
+                  hover
+                  sx={{ transition: '0.3s', '&:hover': { backgroundColor: '#f0f7ff' } }}
+                >
+                  <TableCell>{item.login}</TableCell>
+                  <TableCell>
+                    {item.administrador === '1' ? '✅ Sim' : '❌ Não'}
+                  </TableCell>
+                  <TableCell>
+                    {item.desenvolvedor === '1' ? '💻 Sim' : '❌ Não'}
+                  </TableCell>
+                  <TableCell>{item.email}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      onClick={() => AbreEdicao(item.codigo)}
+                      sx={{ borderRadius: 2 }}
+                    >
+                      Editar
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={5} align="center" sx={{ py: 3, color: 'gray' }}>
+                  Nenhum usuário encontrado.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </Paper>
+    </Container>
+  );
 }
 
 export default Users;

@@ -370,7 +370,7 @@ function Modules() {
                         <img src={require('../../Assets/Images/64 - Filtrar.png')} alt="" /><br/>
                         <br/>
                         <br/>
-                        A função de ordenação possibilita escolher o campo a ser ordenado e qual o tipo de ordenação a ser feito:
+         n               A função de ordenação possibilita escolher o campo a ser ordenado e qual o tipo de ordenação a ser feito:
                         <br/>
                         <img src={require('../../Assets/Images/65 - Order by.png')} alt="" /><br/>
                         <img src={require('../../Assets/Images/66 - Order by.png')} alt="" /><br/>

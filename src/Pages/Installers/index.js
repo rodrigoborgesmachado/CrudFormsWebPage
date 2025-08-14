@@ -7,46 +7,42 @@ import {
   Container,
   Paper,
   Typography,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Button
+  Button,
+  Box,
+  Card,
+  CardContent,
+  CardActions,
+  Divider
 } from '@mui/material';
 
 function Installers(){
-    const[loadding, setLoadding] = useState(true);
-    const[lista, setLista] = useState([]);
+    const [loadding, setLoadding] = useState(true);
+    const [lista, setLista] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-
         async function BuscarInstaladores(){
-            await api.get('/CrudFormsInstalador')
-            .then((response) => {
+            try {
+                const response = await api.get('/CrudFormsInstalador');
                 if(response.data.success){
                     setLista(response.data.object.reverse());
                 }
-                setLoadding(false);
-            }).catch(() => {
+            } catch {
                 toast.error('Erro ao buscar');
                 navigate('/', {replace: true});
-                return;
-            });
+            } finally {
+                setLoadding(false);
+            }
         }
-
         BuscarInstaladores();
-    }, [])
+    }, []);
 
     function Baixar(diretorio){
         const link = document.createElement('a');
-
         link.href = diretorio;
-        // Append to html link element page
         document.body.appendChild(link);
-        // Start download
         link.click();
+        link.remove();
     }
 
     if(loadding){
@@ -57,32 +53,39 @@ function Installers(){
       )
     }
 
-      return(
-          <Container maxWidth="md" sx={{ mt:4 }}>
-            <Paper sx={{ p:2 }}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell><Typography variant="h6">Versão</Typography></TableCell>
-                    <TableCell><Typography variant="h6">Link</Typography></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {lista?.map((item) => (
-                    <TableRow key={item.Codigo}>
-                      <TableCell>{item.versao}</TableCell>
-                      <TableCell>
-                        <Button startIcon={<CloudDownloadIcon />} onClick={() => Baixar(item.diretorio)}>
-                          Baixar versão {item.Versao}
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Paper>
-          </Container>
-      )
+    return(
+        <Container maxWidth="md" sx={{ mt:4 }}>
+          <Typography variant="h5" gutterBottom>
+            Instaladores Disponíveis
+          </Typography>
+          {lista?.map((item, index) => (
+            <Card 
+              key={item.Codigo} 
+              sx={{ mb:2, display:'flex', justifyContent:'space-between', alignItems:'center', p:2 }}
+              elevation={3}
+            >
+              <CardContent sx={{ flex:1 }}>
+                <Typography variant="subtitle2" color="text.secondary">
+                  Versão
+                </Typography>
+                <Typography variant="h6">
+                  {item.versao}
+                </Typography>
+              </CardContent>
+              <Divider orientation="vertical" flexItem sx={{ mx:2 }} />
+              <CardActions>
+                <Button 
+                  variant="contained" 
+                  startIcon={<CloudDownloadIcon />} 
+                  onClick={() => Baixar(item.diretorio)}
+                >
+                  Baixar
+                </Button>
+              </CardActions>
+            </Card>
+          ))}
+        </Container>
+    )
 }
 
 export default Installers;
