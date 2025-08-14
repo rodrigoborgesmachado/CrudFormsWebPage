@@ -5,15 +5,17 @@
     width: 100%; 
     height: 100%;
     gap: 20px;
+    padding: 20px;
+    background-color: #fafafa;
 }
 
 .menu {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* várias colunas */
-    gap: 12px;
-    margin: 20px;
-    width: 100%; /* ocupar largura disponível */
-    max-width: 800px; /* opcional, limita a largura máxima */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 1000px;
 }
 
 .texto {
@@ -21,30 +23,40 @@
 }
 
 .texto img {
-    max-width: -webkit-fill-available;
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
 }
 
 .menu h3 {
     cursor: pointer;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 12px;
-    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #ffffff, #f7f7f7);
     font-size: 16px;
     font-weight: 600;
+    color: #333;
     display: flex;
     align-items: center;
-    gap: 8px;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.05);
-    transition: background-color 0.2s, border-color 0.2s, transform 0.1s;
+    gap: 10px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
 }
 
 .menu h3:hover {
-    background-color: #f0f0f0;
-    border-color: #888;
-    transform: translateY(-2px); /* pequeno efeito de levantar */
+    background: linear-gradient(135deg, #f0f0f0, #eaeaea);
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 12px rgba(0,0,0,0.1);
 }
 
 .texto a {
     cursor: pointer;
+    color: #1976d2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.texto a:hover {
+    text-decoration: underline;
 }
