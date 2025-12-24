@@ -3,6 +3,7 @@ import StorageIcon from '@mui/icons-material/Storage';
 import DescriptionIcon from '@mui/icons-material/Description';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import DownloadIcon from '@mui/icons-material/Download';
+import logoWhite from '../../Assets/Images/logo_white200x200.png';
 
 function Home() {
   const features = [
@@ -30,14 +31,17 @@ function Home() {
 
   return (
     <Container sx={{ py: 5 }}>
-      <Box textAlign="center" mb={5}>
-        <Typography variant="h4" fontWeight="bold" gutterBottom>
-          Bem-vindo ao CrudForms
-        </Typography>
-        <Typography variant="body1" color="text.secondary" maxWidth="md" mx="auto">
-          Uma ferramenta criada para facilitar o dia a dia de profissionais de tecnologia.
-        </Typography>
-      </Box>
+      <div className='description'>
+        <img src={logoWhite}/>
+        <Box textAlign="center" mb={5}>
+          <Typography variant="h4" fontWeight="bold" gutterBottom>
+            Bem-vindo ao CrudForms
+          </Typography>
+          <Typography variant="body1" color="text.secondary" maxWidth="md" mx="auto">
+            Uma ferramenta criada para facilitar o dia a dia de profissionais de tecnologia.
+          </Typography>
+        </Box>
+      </div>
 
       <Grid container spacing={4}>
         {features.map((feature, index) => (

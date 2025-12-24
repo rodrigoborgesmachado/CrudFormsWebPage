@@ -60,3 +60,14 @@
 .texto a:hover {
     text-decoration: underline;
 }
+
+.description{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.description img{
+    margin-bottom: 4rem;
+}
